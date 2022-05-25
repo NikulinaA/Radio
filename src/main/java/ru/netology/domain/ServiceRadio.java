@@ -19,7 +19,7 @@ public class ServiceRadio {
    public int getCurrentRadioStation() {
         return currentRadioStation;
     }
-    //Похоже он не нужен? Ну ладно))) */
+
 
     public void setSwitchingRadioStation(String switchingRadioStation) {
 
@@ -48,7 +48,7 @@ public class ServiceRadio {
         if (newSoundRadio < 0) {
             return;
         }
-        if (newSoundRadio > 9) {
+        if (newSoundRadio > 10) {
             return;
         }
         this.soundRadio = newSoundRadio;
@@ -57,20 +57,20 @@ public class ServiceRadio {
     public int getSoundRadio() {
         return soundRadio;
     }
-    //Похоже он не нужен? Ну ладно))) */
+
 
     public void setSwitchingRadioSound(String switchingRadioSound) {
 
         if (switchingRadioSound.equals("+")) {
             soundRadio++;
-            if (soundRadio == 10) {
+            if (soundRadio == 11) {
                 soundRadio = 0;
             }
         }
         if (switchingRadioSound.equals("-")) {
             soundRadio = soundRadio - 1;
             if (soundRadio == -1) {
-                soundRadio = 9;
+                soundRadio = 10;
             }
         }
 
@@ -83,7 +83,7 @@ public class ServiceRadio {
         if (newSoundRadio < 0) {
             return;
         }
-        if (newSoundRadio > 9) {
+        if (newSoundRadio > 10) {
             return;
         }
         this.soundRadio = newSoundRadio;

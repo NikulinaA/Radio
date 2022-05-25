@@ -44,7 +44,7 @@ public class ServiceRadioTest {
         Assertions.assertEquals(expected, actual);
     }
     @ParameterizedTest
-    @CsvFileSource(resources = {"/NoCurrent.csv"})
+    @CsvFileSource(resources = {"/NocurrentSound.csv"})
     public void noSwitchingSound(int radioSound, long expected) {
 
         ServiceRadio service = new ServiceRadio();
