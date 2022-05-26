@@ -1,4 +1,5 @@
 package ru.netology.domain;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -17,18 +18,32 @@ public class ServiceRadioTest {
 
         Assertions.assertEquals(expected, actual);
     }
-    // Тестирование автоматического переключения радиостанции
+
+    // Тестирование автоматического переключения радиостанции кнопкой "Вперед"
     @ParameterizedTest
-    @CsvFileSource(resources = {"/CurrentRadioStationTest.csv"})
-    public void switchingRadioStation(int radioStation, long expected, String switching) {
+    @CsvFileSource(resources = {"/CurrentNextRadioStationTest.csv"})
+    public void switchingNextRadioStation(int radioStation, long expected, String switching) {
 
         ServiceRadio service = new ServiceRadio();
         service.setCurrentRadioStation(radioStation);
+        service.setSwitchingNextRadioStation(switching);
 
-        // Прямое указание станции проходит в тестах при указании "null" на переключение. Пустое поле не сработало(((
-        service.setSwitchingRadioStation(switching);
 
-        long actual = service.getSwitchingRadioStation();
+        long actual = service.getSwitchingNextRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тестирование автоматического переключения радиостанции кнопкой "Назад"
+    @ParameterizedTest
+    @CsvFileSource(resources = {"/CurrentPrevRadioStationTest.csv"})
+    public void switchingPrevRadioStation(int radioStation, long expected, String switching) {
+
+        ServiceRadio service = new ServiceRadio();
+        service.setCurrentRadioStation(radioStation);
+        service.setSwitchingPrevRadioStation(switching);
+
+        long actual = service.getSwitchingPrevRadioStation();
 
         Assertions.assertEquals(expected, actual);
     }
@@ -45,18 +60,32 @@ public class ServiceRadioTest {
 
         Assertions.assertEquals(expected, actual);
     }
+// Тестирование автоматического увеличения уровня громкости радио
     @ParameterizedTest
-    @CsvFileSource(resources = {"/CurrentSoundTest.csv"})
-    public void switchingSound(int radioSound, long expected, String switchSound) {
+    @CsvFileSource(resources = {"/CurrentPlusSoundTest.csv"})
+    public void switchingPlusSound(int radioSound, long expected, String switchSound) {
 
         ServiceRadio service = new ServiceRadio();
         service.setSoundRadio(radioSound);
 
-        service.setSwitchingRadioSound(switchSound);
+        service.setSwitchingPlusRadioSound(switchSound);
 
-        long actual = service.getSwitchingRadioSound();
+        long actual = service.getSwitchingPlusRadioSound();
 
         Assertions.assertEquals(expected, actual);
     }
+// Тестирование автоматического уменьшения уровня громкости радио
+    @ParameterizedTest
+    @CsvFileSource(resources = {"/CurrentMinusSoundTest.csv"})
+    public void switchingMinusSound(int radioSound, long expected, String switchSound) {
 
+        ServiceRadio service = new ServiceRadio();
+        service.setSoundRadio(radioSound);
+
+        service.setSwitchingMinusRadioSound(switchSound);
+
+        long actual = service.getSwitchingMinusRadioSound();
+
+        Assertions.assertEquals(expected, actual);
+    }
 }
