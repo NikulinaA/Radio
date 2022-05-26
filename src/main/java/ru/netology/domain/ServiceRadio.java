@@ -6,6 +6,8 @@ public class ServiceRadio {
     private int currentRadioStation;
     private int soundRadio;
 
+
+    //Сервис ручного переключения радиостанций
     public void setCurrentRadioStation(int newCurrentRadioStation) {
         if (newCurrentRadioStation < 0) {
             return;
@@ -20,7 +22,7 @@ public class ServiceRadio {
         return currentRadioStation;
     }
 
-
+    // Сервис переключения радиостанций кнопками "Вперед"/"Назад"
     public void setSwitchingRadioStation(String switchingRadioStation) {
 
         if (switchingRadioStation.equals("next")) {
@@ -42,7 +44,7 @@ public class ServiceRadio {
         return currentRadioStation;
     }
 
-
+    //Сервис ручного переключения уровня громкости радио
 
     public void setSoundRadio(int newSoundRadio) {
         if (newSoundRadio < 0) {
@@ -58,19 +60,19 @@ public class ServiceRadio {
         return soundRadio;
     }
 
-
+    //Сервис автоматического переключения уровня громкости радио кнопками +/-
     public void setSwitchingRadioSound(String switchingRadioSound) {
 
         if (switchingRadioSound.equals("+")) {
             soundRadio++;
             if (soundRadio == 11) {
-                soundRadio = 0;
+                soundRadio = 10;
             }
         }
         if (switchingRadioSound.equals("-")) {
             soundRadio = soundRadio - 1;
             if (soundRadio == -1) {
-                soundRadio = 10;
+                soundRadio = 0;
             }
         }
 
@@ -79,22 +81,5 @@ public class ServiceRadio {
     public int getSwitchingRadioSound() {
         return soundRadio;
     }
-    public void setNoSoundRadio(int newSoundRadio) {
-        if (newSoundRadio < 0) {
-            return;
-        }
-        if (newSoundRadio > 10) {
-            return;
-        }
-        this.soundRadio = newSoundRadio;
-    }
-    public void setNoCurrentRadioStation(int newCurrentRadioStation) {
-        if (newCurrentRadioStation < 0) {
-            return;
-        }
-        if (newCurrentRadioStation > 9) {
-            return;
-        }
-        this.currentRadioStation = newCurrentRadioStation;
-    }
+
 }

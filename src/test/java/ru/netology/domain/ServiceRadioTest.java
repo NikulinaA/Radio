@@ -5,6 +5,19 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class ServiceRadioTest {
 
+    //Тестирование ручного переключения радиостанции
+    @ParameterizedTest
+    @CsvFileSource(resources = {"/NoCurrent.csv"})
+    public void switchingNoRadioStation(int radioStation, long expected) {
+
+        ServiceRadio service = new ServiceRadio();
+        service.setCurrentRadioStation(radioStation);
+
+        long actual = service.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+    // Тестирование автоматического переключения радиостанции
     @ParameterizedTest
     @CsvFileSource(resources = {"/CurrentRadioStationTest.csv"})
     public void switchingRadioStation(int radioStation, long expected, String switching) {
@@ -19,14 +32,16 @@ public class ServiceRadioTest {
 
         Assertions.assertEquals(expected, actual);
     }
+
+    //Тестирование ручного переключения уровня громкости радио
     @ParameterizedTest
-    @CsvFileSource(resources = {"/NoCurrent.csv"})
-    public void switchingNoRadioStation(int radioStation, long expected) {
+    @CsvFileSource(resources = {"/NocurrentSound.csv"})
+    public void noSwitchingSound(int radioSound, long expected) {
 
         ServiceRadio service = new ServiceRadio();
-        service.setNoCurrentRadioStation(radioStation);
+        service.setSoundRadio(radioSound);
 
-        long actual = service.getSwitchingRadioStation();
+        long actual = service.getSoundRadio();
 
         Assertions.assertEquals(expected, actual);
     }
@@ -39,19 +54,9 @@ public class ServiceRadioTest {
 
         service.setSwitchingRadioSound(switchSound);
 
-        long actual = service.getSoundRadio();
+        long actual = service.getSwitchingRadioSound();
 
         Assertions.assertEquals(expected, actual);
     }
-    @ParameterizedTest
-    @CsvFileSource(resources = {"/NocurrentSound.csv"})
-    public void noSwitchingSound(int radioSound, long expected) {
 
-        ServiceRadio service = new ServiceRadio();
-        service.setNoSoundRadio(radioSound);
-
-        long actual = service.getSoundRadio();
-
-        Assertions.assertEquals(expected, actual);
-    }
 }
