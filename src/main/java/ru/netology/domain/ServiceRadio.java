@@ -1,106 +1,80 @@
 package ru.netology.domain;
 
-import java.text.StringCharacterIterator;
+import lombok.Data;
 
+@Data
 public class ServiceRadio {
     private int currentRadioStation;
+    private int maxRadioStation = 9;
+    private int minRadioStation;
     private int soundRadio;
+    private int switchingNextRadioStation;
+    private int switchingPrevRadioStation;
+    private int switchingPlusRadioSound;
+    private int switchingMinusRadioSound;
 
+    public ServiceRadio(int currentRadioStation) {
+        this.maxRadioStation = currentRadioStation - 1;
+    }
+
+    public ServiceRadio() {
+    }
 
     //Сервис ручного переключения радиостанций
     public void setCurrentRadioStation(int newCurrentRadioStation) {
-        if (newCurrentRadioStation < 0) {
-            return;
+        if (newCurrentRadioStation < minRadioStation) {
+            newCurrentRadioStation = minRadioStation; //при попытке ввода радиостанции меньше нуля получаем станцию мин
         }
-        if (newCurrentRadioStation > 9) {
-            return;
+        if (newCurrentRadioStation > maxRadioStation) {
+            newCurrentRadioStation = maxRadioStation; // попытка ввода станции больше макса устанавливает максимальную ст
         }
         this.currentRadioStation = newCurrentRadioStation;
     }
 
-    public int getCurrentRadioStation() {
-        return currentRadioStation;
-    }
-
     // Сервис переключения радиостанций кнопкой "Вперед"
-    public void setSwitchingNextRadioStation(String switchingRadioStation) {
-
-        if (switchingRadioStation.equals("next")) {
-            currentRadioStation++;
-            if (currentRadioStation == 10) {
-                currentRadioStation = 0;
-            }
+    public void setSwitchingNextRadioStation() {
+        switchingNextRadioStation = currentRadioStation+1;
+        if (switchingNextRadioStation == maxRadioStation + 1) {
+            switchingNextRadioStation = minRadioStation;
         }
 
-
-    }
-
-    public int getSwitchingNextRadioStation() {
-        return currentRadioStation;
     }
     // Сервис переключения радиостанций кнопкой "Назад"
 
-    public void setSwitchingPrevRadioStation(String switchingRadioStation) {
-
-        if (switchingRadioStation.equals("prev")) {
-            currentRadioStation = currentRadioStation - 1;
-            if (currentRadioStation == -1) {
-                currentRadioStation = 9;
-            }
+    public void setSwitchingPrevRadioStation() {
+        switchingPrevRadioStation = currentRadioStation - 1;
+        if (switchingPrevRadioStation == minRadioStation - 1) {
+            switchingPrevRadioStation = maxRadioStation;
         }
-
-    }
-
-
-    public int getSwitchingPrevRadioStation() {
-        return currentRadioStation;
     }
     //Сервис ручного переключения уровня громкости радио
 
     public void setSoundRadio(int newSoundRadio) {
         if (newSoundRadio < 0) {
-            return;
+            newSoundRadio = 0;
         }
-        if (newSoundRadio > 10) {
-            return;
+        if (newSoundRadio > 100) {
+            newSoundRadio = 100;
         }
         this.soundRadio = newSoundRadio;
     }
 
-    public int getSoundRadio() {
-        return soundRadio;
-    }
-
     //Сервис автоматического увеличения уровня громкости радио
-    public void setSwitchingPlusRadioSound(String switchingRadioSound) {
-
-        if (switchingRadioSound.equals("+")) {
-            soundRadio++;
-            if (soundRadio == 11) {
-                soundRadio = 10;
-            }
+    public void setSwitchingPlusRadioSound() {
+        switchingPlusRadioSound = soundRadio+1;
+        if (switchingPlusRadioSound == 101) {
+            switchingPlusRadioSound = 100;
         }
-
-    }
-
-    public int getSwitchingPlusRadioSound() {
-        return soundRadio;
     }
 
     //Сервис автоматического уменьшения уровня громкости радио
-    public void setSwitchingMinusRadioSound(String switchingRadioSound) {
-
-
-        if (switchingRadioSound.equals("-")) {
-            soundRadio = soundRadio - 1;
-            if (soundRadio == -1) {
-                soundRadio = 0;
-            }
+    public void setSwitchingMinusRadioSound() {
+        switchingMinusRadioSound = soundRadio - 1;
+        if (switchingMinusRadioSound == -1) {
+            switchingMinusRadioSound = 0;
         }
     }
 
-    public int getSwitchingMinusRadioSound() {
-        return soundRadio;
-    }}
+}
 
 
