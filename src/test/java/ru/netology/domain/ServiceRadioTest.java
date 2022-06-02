@@ -73,6 +73,7 @@ public class ServiceRadioTest {
 
         long actual = service.getSwitchingPrevRadioStation();
 
+
         Assertions.assertEquals(expected, actual);
     }
 

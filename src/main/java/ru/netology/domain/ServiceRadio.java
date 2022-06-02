@@ -1,20 +1,24 @@
 package ru.netology.domain;
 
+import lombok.Data;
+
+@Data
 public class ServiceRadio {
     private int currentRadioStation;
     private int maxRadioStation = 9;
     private int minRadioStation;
     private int soundRadio;
+    private int switchingNextRadioStation;
+    private int switchingPrevRadioStation;
+    private int switchingPlusRadioSound;
+    private int switchingMinusRadioSound;
 
     public ServiceRadio(int currentRadioStation) {
         this.maxRadioStation = currentRadioStation - 1;
-
-
     }
 
     public ServiceRadio() {
     }
-
 
     //Сервис ручного переключения радиостанций
     public void setCurrentRadioStation(int newCurrentRadioStation) {
@@ -24,46 +28,24 @@ public class ServiceRadio {
         if (newCurrentRadioStation > maxRadioStation) {
             newCurrentRadioStation = maxRadioStation; // попытка ввода станции больше макса устанавливает максимальную ст
         }
-
         this.currentRadioStation = newCurrentRadioStation;
-    }
-
-    public int getCurrentRadioStation() {
-        return currentRadioStation;
     }
 
     // Сервис переключения радиостанций кнопкой "Вперед"
     public void setSwitchingNextRadioStation() {
-        ;
-
-        currentRadioStation++;
-        if (currentRadioStation == maxRadioStation + 1) {
-            currentRadioStation = minRadioStation;
-
+        switchingNextRadioStation = currentRadioStation+1;
+        if (switchingNextRadioStation == maxRadioStation + 1) {
+            switchingNextRadioStation = minRadioStation;
         }
 
-
-    }
-
-    public int getSwitchingNextRadioStation() {
-        return currentRadioStation;
     }
     // Сервис переключения радиостанций кнопкой "Назад"
 
     public void setSwitchingPrevRadioStation() {
-
-
-        currentRadioStation = currentRadioStation - 1;
-        if (currentRadioStation == minRadioStation - 1) {
-            currentRadioStation = maxRadioStation;
-
+        switchingPrevRadioStation = currentRadioStation - 1;
+        if (switchingPrevRadioStation == minRadioStation - 1) {
+            switchingPrevRadioStation = maxRadioStation;
         }
-
-    }
-
-
-    public int getSwitchingPrevRadioStation() {
-        return currentRadioStation;
     }
     //Сервис ручного переключения уровня громкости радио
 
@@ -77,37 +59,22 @@ public class ServiceRadio {
         this.soundRadio = newSoundRadio;
     }
 
-    public int getSoundRadio() {
-        return soundRadio;
-    }
-
     //Сервис автоматического увеличения уровня громкости радио
     public void setSwitchingPlusRadioSound() {
-
-
-        soundRadio++;
-        if (soundRadio == 101) {
-            soundRadio = 100;
+        switchingPlusRadioSound = soundRadio+1;
+        if (switchingPlusRadioSound == 101) {
+            switchingPlusRadioSound = 100;
         }
-    }
-
-    public int getSwitchingPlusRadioSound() {
-        return soundRadio;
     }
 
     //Сервис автоматического уменьшения уровня громкости радио
     public void setSwitchingMinusRadioSound() {
-
-
-        soundRadio = soundRadio - 1;
-        if (soundRadio == -1) {
-            soundRadio = 0;
+        switchingMinusRadioSound = soundRadio - 1;
+        if (switchingMinusRadioSound == -1) {
+            switchingMinusRadioSound = 0;
         }
     }
 
-    public int getSwitchingMinusRadioSound() {
-        return soundRadio;
-    }
 }
 
 
