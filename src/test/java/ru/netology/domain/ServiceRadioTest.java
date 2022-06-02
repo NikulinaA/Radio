@@ -6,10 +6,22 @@ import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class ServiceRadioTest {
 
-    //Тестирование ручного переключения радиостанции
+    //Тестирование ручного переключения радиостанции с установкой количества станций
     @ParameterizedTest
     @CsvFileSource(resources = {"/NoCurrent.csv"})
-    public void switchingNoRadioStation(int radioStation, long expected) {
+    public void switchingCountRadioStation(int radioStation,int countRadioStation, int expected) {
+
+        ServiceRadio service = new ServiceRadio(countRadioStation);
+        service.setCurrentRadioStation(radioStation);
+
+        long actual = service.getCurrentRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+    //Тестирование ручного переключения радиостанции
+    @ParameterizedTest
+    @CsvFileSource(resources = {"/NoCountNoCurrent.csv"})
+    public void switchingNoCountRadioStation(int radioStation,int expected) {
 
         ServiceRadio service = new ServiceRadio();
         service.setCurrentRadioStation(radioStation);
@@ -19,14 +31,30 @@ public class ServiceRadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    // Тестирование автоматического переключения радиостанции кнопкой "Вперед"
+    // Тестирование автоматического переключения радиостанции кнопкой "Вперед" с установкой количества станций
     @ParameterizedTest
     @CsvFileSource(resources = {"/CurrentNextRadioStationTest.csv"})
-    public void switchingNextRadioStation(int radioStation, long expected, String switching) {
+    public void switchingNextRadioStationCount(int radioStation, int expected,int countRadioStation) {
+
+        ServiceRadio service = new ServiceRadio(countRadioStation);
+        service.setCurrentRadioStation(radioStation);
+
+        service.setSwitchingNextRadioStation();
+
+
+        long actual = service.getSwitchingNextRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+    // Тестирование автоматического переключения радиостанции кнопкой "Вперед"
+    @ParameterizedTest
+    @CsvFileSource(resources = {"/CurrentNextRadioStationTestNoCount.csv"})
+    public void switchingNextRadioStationNoCount(int radioStation, int expected) {
 
         ServiceRadio service = new ServiceRadio();
         service.setCurrentRadioStation(radioStation);
-        service.setSwitchingNextRadioStation(switching);
+
+        service.setSwitchingNextRadioStation();
 
 
         long actual = service.getSwitchingNextRadioStation();
@@ -34,14 +62,28 @@ public class ServiceRadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    // Тестирование автоматического переключения радиостанции кнопкой "Назад"
+    // Тестирование автоматического переключения радиостанции кнопкой "Назад" с установкой количества станций
     @ParameterizedTest
     @CsvFileSource(resources = {"/CurrentPrevRadioStationTest.csv"})
-    public void switchingPrevRadioStation(int radioStation, long expected, String switching) {
+    public void switchingPrevRadioStationCount(int radioStation, int expected,int countRadioStation) {
+
+        ServiceRadio service = new ServiceRadio(countRadioStation);
+        service.setCurrentRadioStation(radioStation);
+        service.setSwitchingPrevRadioStation();
+
+        long actual = service.getSwitchingPrevRadioStation();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    // Тестирование автоматического переключения радиостанции кнопкой "Назад"
+    @ParameterizedTest
+    @CsvFileSource(resources = {"/CurrentPrevRadioStationTestNoCount.csv"})
+    public void switchingPrevRadioStationNoCount(int radioStation, int expected) {
 
         ServiceRadio service = new ServiceRadio();
         service.setCurrentRadioStation(radioStation);
-        service.setSwitchingPrevRadioStation(switching);
+        service.setSwitchingPrevRadioStation();
 
         long actual = service.getSwitchingPrevRadioStation();
 
@@ -63,12 +105,12 @@ public class ServiceRadioTest {
 // Тестирование автоматического увеличения уровня громкости радио
     @ParameterizedTest
     @CsvFileSource(resources = {"/CurrentPlusSoundTest.csv"})
-    public void switchingPlusSound(int radioSound, long expected, String switchSound) {
+    public void switchingPlusSound(int radioSound, int expected) {
 
         ServiceRadio service = new ServiceRadio();
         service.setSoundRadio(radioSound);
 
-        service.setSwitchingPlusRadioSound(switchSound);
+        service.setSwitchingPlusRadioSound();
 
         long actual = service.getSwitchingPlusRadioSound();
 
@@ -77,12 +119,12 @@ public class ServiceRadioTest {
 // Тестирование автоматического уменьшения уровня громкости радио
     @ParameterizedTest
     @CsvFileSource(resources = {"/CurrentMinusSoundTest.csv"})
-    public void switchingMinusSound(int radioSound, long expected, String switchSound) {
+    public void switchingMinusSound(int radioSound, int expected) {
 
         ServiceRadio service = new ServiceRadio();
         service.setSoundRadio(radioSound);
 
-        service.setSwitchingMinusRadioSound(switchSound);
+        service.setSwitchingMinusRadioSound();
 
         long actual = service.getSwitchingMinusRadioSound();
 

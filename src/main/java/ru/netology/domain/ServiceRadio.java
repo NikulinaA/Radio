@@ -1,20 +1,30 @@
 package ru.netology.domain;
 
-import java.text.StringCharacterIterator;
-
 public class ServiceRadio {
     private int currentRadioStation;
+    private int maxRadioStation = 9;
+    private int minRadioStation;
     private int soundRadio;
+
+    public ServiceRadio(int currentRadioStation) {
+        this.maxRadioStation = currentRadioStation - 1;
+
+
+    }
+
+    public ServiceRadio() {
+    }
 
 
     //Сервис ручного переключения радиостанций
     public void setCurrentRadioStation(int newCurrentRadioStation) {
-        if (newCurrentRadioStation < 0) {
-            return;
+        if (newCurrentRadioStation < minRadioStation) {
+            newCurrentRadioStation = minRadioStation; //при попытке ввода радиостанции меньше нуля получаем станцию мин
         }
-        if (newCurrentRadioStation > 9) {
-            return;
+        if (newCurrentRadioStation > maxRadioStation) {
+            newCurrentRadioStation = maxRadioStation; // попытка ввода станции больше макса устанавливает максимальную ст
         }
+
         this.currentRadioStation = newCurrentRadioStation;
     }
 
@@ -23,13 +33,13 @@ public class ServiceRadio {
     }
 
     // Сервис переключения радиостанций кнопкой "Вперед"
-    public void setSwitchingNextRadioStation(String switchingRadioStation) {
+    public void setSwitchingNextRadioStation() {
+        ;
 
-        if (switchingRadioStation.equals("next")) {
-            currentRadioStation++;
-            if (currentRadioStation == 10) {
-                currentRadioStation = 0;
-            }
+        currentRadioStation++;
+        if (currentRadioStation == maxRadioStation + 1) {
+            currentRadioStation = minRadioStation;
+
         }
 
 
@@ -40,13 +50,13 @@ public class ServiceRadio {
     }
     // Сервис переключения радиостанций кнопкой "Назад"
 
-    public void setSwitchingPrevRadioStation(String switchingRadioStation) {
+    public void setSwitchingPrevRadioStation() {
 
-        if (switchingRadioStation.equals("prev")) {
-            currentRadioStation = currentRadioStation - 1;
-            if (currentRadioStation == -1) {
-                currentRadioStation = 9;
-            }
+
+        currentRadioStation = currentRadioStation - 1;
+        if (currentRadioStation == minRadioStation - 1) {
+            currentRadioStation = maxRadioStation;
+
         }
 
     }
@@ -59,10 +69,10 @@ public class ServiceRadio {
 
     public void setSoundRadio(int newSoundRadio) {
         if (newSoundRadio < 0) {
-            return;
+            newSoundRadio = 0;
         }
-        if (newSoundRadio > 10) {
-            return;
+        if (newSoundRadio > 100) {
+            newSoundRadio = 100;
         }
         this.soundRadio = newSoundRadio;
     }
@@ -72,15 +82,13 @@ public class ServiceRadio {
     }
 
     //Сервис автоматического увеличения уровня громкости радио
-    public void setSwitchingPlusRadioSound(String switchingRadioSound) {
+    public void setSwitchingPlusRadioSound() {
 
-        if (switchingRadioSound.equals("+")) {
-            soundRadio++;
-            if (soundRadio == 11) {
-                soundRadio = 10;
-            }
+
+        soundRadio++;
+        if (soundRadio == 101) {
+            soundRadio = 100;
         }
-
     }
 
     public int getSwitchingPlusRadioSound() {
@@ -88,19 +96,18 @@ public class ServiceRadio {
     }
 
     //Сервис автоматического уменьшения уровня громкости радио
-    public void setSwitchingMinusRadioSound(String switchingRadioSound) {
+    public void setSwitchingMinusRadioSound() {
 
 
-        if (switchingRadioSound.equals("-")) {
-            soundRadio = soundRadio - 1;
-            if (soundRadio == -1) {
-                soundRadio = 0;
-            }
+        soundRadio = soundRadio - 1;
+        if (soundRadio == -1) {
+            soundRadio = 0;
         }
     }
 
     public int getSwitchingMinusRadioSound() {
         return soundRadio;
-    }}
+    }
+}
 
 
